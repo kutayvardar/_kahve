@@ -1,0 +1,656 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+          <meta>
+          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+          <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    	  <link rel="icon" href="favicon.ico" type="image/x-icon">
+        
+
+
+        <title>
+          
+      Kahveler - Filtre Kahve 
+  | KahhveCom
+
+        </title>
+        
+        <meta name="robots" content="noindex" />
+        
+  <meta name="description" content="Filtre Kahve ürünlerini online olarak satın alabileceğiniz, fiyat bilgisi edinebileceğiniz, hakkında bilgiler bulabileceğiniz katalog sayfamız">
+  <meta name="keywords" content="">
+
+
+        <script type="text/javascript" src="/dist/angular.min.js"></script>
+        <script type="text/javascript" src="/js/libs/modernizr.custom.js"></script>
+        <script type="text/javascript" src="/js/libs/jquery-1.11.1.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+        <link rel="stylesheet" type="text/css" href="/css/kahhve.css" />
+        <link rel="stylesheet" type="text/css" href="/masterslider/style/masterslider.css" />
+
+
+
+        
+        
+        
+        
+
+        
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-66910590-1', 'auto');
+          ga('send', 'pageview');
+        </script>
+        
+        
+    </head>
+    <body ng-app="kahhve" ng-controller="layoutctrl">
+    		        <!--Login Modal-->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true" ng-controller="loginctrl">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+        <h2>Giriş Yap / <a href="/login">Üye Ol</a></h2>
+        <p class="large">Sosyal Medya İle</p>
+        <div class="social-login">
+          <a class="facebook" href="/login/fblogin"><i class="fa fa-facebook-square"></i></a>
+        </div>
+      </div>
+      <div class="modal-body">
+        <form class="login-form" id="login_modal_form" action="/login/login" method="post">
+          <div class="alert alert-danger" role="alert" ng-show="login_error">
+            <span class="fa fa-exclamation" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            Yanlış mail veya şifre
+          </div>
+          <div class="form-group group">
+            <label for="log-email">Mail</label>
+            <input type="email" class="form-control" name="mail" id="log-mail" placeholder="Mail Adresinizi Giriniz" required>
+          </div>
+          <div class="form-group group">
+            <label for="log-password">Şifre</label>
+            <input type="password" class="form-control" name="sifre" id="log-sifre" placeholder="Şifrenizi Giriniz" required>
+            <a class="help-link cursor_pointer" data-dismiss="modal" data-toggle="modal" data-target="#sifremiunuttum">Şifremi Unuttum?</a>
+          </div>
+          <input class="btn btn-black" type="submit" ng-click="login()" value="Giriş Yap">
+        </form>
+        <script>
+          $( "#login_modal_form" ).submit(function(e) {
+            e.preventDefault();
+            angular.element($("#loginModal")).scope().login();
+          });
+        </script>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<!--Login Modal-->
+<div class="modal fade" id="sifremiunuttum" tabindex="-1" role="dialog" aria-hidden="true" ng-controller="loginctrl">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+        <h2>Şifremi Unuttum</a></h2>
+      </div>
+      <div class="modal-body">
+        <form class="login-form" ng-hide="unuttum_gonderildi">
+          <div class="alert alert-danger" role="alert" ng-show="unuttum_error">
+            <span class="fa fa-exclamation" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            Bu mail adresiyle kayıtlı bir üye yok. Hemen <a href="/login/login"> üye ol</a>
+          </div>
+          <div class="form-group group">
+            <label for="unuttum-email">Mail Adresiniz</label>
+            <input type="email" class="form-control" name="mail" id="unuttum-mail" placeholder="Mail Adresinizi Giriniz" required>
+          </div>
+          <input class="btn btn-black" ng-click="sifremiunuttum()" value="Mail Gönder">
+        </form>
+        <div ng-show="unuttum_gonderildi">
+          Yeni bir şifre için vermiş olduğunuz mail adresini kontrol ediniz.
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->        
+        
+        	<header data-offset-top="500" data-stuck="600"><!--data-offset-top is when header converts to small variant and data-stuck when it becomes visible. Values in px represent position of scroll from top. Make sure there is at least 100px between those two values for smooth animation-->
+  <!--Mobile Menu Toggle-->
+  <div class="menu-toggle"><i class="fa fa-list"></i></div>
+  
+  <!--Main Menu-->
+  <nav class="menu">
+    <div class="container">
+      <a class="logo" href="/"><img src="/img/layout/logo.png" alt="KahhveCom"/></a>
+      <form id="search_form" class="search-form" method="get" action="/arama" role="form">
+        <ul class="dropdown-menu" id="arama_dropdown" style="width:100%">
+          <li ng-repeat="kategori in arama_sonucu.kategoriler"><a href="/{{kategori.isim_id}}"><strong>Kategori:</strong> {{kategori.isim}}</a></li>
+          <li ng-repeat="marka in arama_sonucu.markalar"><a href="/{{marka.isim_id}}"><img ng-src="/img/markalar/{{marka.marka_resmi}}">{{marka.isim}}</li>
+          <li ng-repeat="urun in arama_sonucu.urunler"><a href="{{urun.link}}"><img ng-src="/img/urunler/{{urun.ana_resim}}">{{urun.urun_ismi}}</a></li>
+        </ul>
+        <label class="sr-only" for="search-hd">Arama</label>
+        <input type="text" class="form-control" name="kelime" id="search-hd" placeholder="Arama" ng-model="arama">
+        <script>
+          $("#search-hd").focusin(function() {
+              $("#arama_dropdown").show();
+          }).focusout(function () {
+              setTimeout(function(){ $("#arama_dropdown").hide(); }, 500);
+          });
+        </script>
+        <button style="top: 12px;" type="submit"><i class="icon-magnifier"></i></button>
+      </form>
+
+      <ul class="main pull-right" style="width: 200px; margin-right: 275px;">
+        <li class="has-submenu"><a href="/markalarimiz"><span>M</span>arkalar<i class="fa fa-chevron-down"></i></a>
+          <ul class="submenu">
+                          <li><a href="/cool-beans">Cool Beans</a></li>
+                          <li><a href="/chemex">Chemex</a></li>
+                          <li><a href="/bodum">Bodum</a></li>
+                          <li><a href="/hario">Hario</a></li>
+                          <li><a href="/bialetti">Bialetti</a></li>
+                          <li><a href="/coffee-sapiens">Coffee Sapiens</a></li>
+                          <li><a href="/lavazza">Lavazza</a></li>
+                          <li><a href="/vergnano">Vergnano</a></li>
+                          <li><a href="/coffee-nutz">Coffee Nutz</a></li>
+                          <li><a href="/aeropress">Aeropress</a></li>
+                          <li><a href="/delonghi">Delonghi</a></li>
+                          <li><a href="/baratza">Baratza</a></li>
+                          <li><a href="/twins">Twins</a></li>
+                          <li><a href="/mr-peter-exclusive-">Mr. Peter Exclusive </a></li>
+                          <li><a href="/drip-coffeeist">Drip Coffeeist</a></li>
+                          <li><a href="/mighty-mug">Mighty Mug</a></li>
+                      </ul>
+        </li>
+      </ul>
+    </div>
+     
+    <div class="catalog-block">
+      <div class="container">
+        <ul style="position: relative; max-width: 900px" class="catalog">
+        	
+                                            <li style="position: static;" class="has-submenu">
+              <a href="/kahveler">Kahveler</a>
+              <ul style="left: 0;" class="submenu">
+                                                <span ng-init="kategori1 = 6"></span>
+                                        <li><a href="/filtre-kahve" ng-mouseover="kategori1 = 6">Filtre Kahve</a></li>
+                    <li class="offer" ng-show="kategori1 == 6" >
+                      <div class="col-1">
+                        <p class="p-style2">Cool Beans'in filtre kahve tadı isteyenler için taze kavrulmuş kahve.</p>
+                      </div>
+                      <div class="col-2">
+                                              <img id="header_submenu" src="/img/urunler/65_1440235083_KyQ.jpg" alt="Filtre Kahve Harmanı"/>
+                        <a class="btn btn-black" href="/cool-beans-filtre-kahve-harmani-kahveler"><span>21.99 TL</span>Satın Al</a>
+                                            </div>
+                    </li>
+                                        <li><a href="/espresso" ng-mouseover="kategori1 = 9">Espresso</a></li>
+                    <li class="offer" ng-show="kategori1 == 9" >
+                      <div class="col-1">
+                        <p class="p-style2">Asitliği düşük, güçlü bir gövde ve aromaya sahip günün her saati içilebilen bir lezzet sunan kahve harmanı </p>
+                      </div>
+                      <div class="col-2">
+                                              <img id="header_submenu" src="/img/urunler/90_1440866763_rxa.jpg" alt="Espresso Harmanı"/>
+                        <a class="btn btn-black" href="/cool-beans-espresso-harmani-kahveler"><span>21.99 TL</span>Satın Al</a>
+                                            </div>
+                    </li>
+                                        <li><a href="/turk-kahvesi" ng-mouseover="kategori1 = 15">Türk Kahvesi</a></li>
+                    <li class="offer" ng-show="kategori1 == 15" >
+                      <div class="col-1">
+                        <p class="p-style2"></p>
+                      </div>
+                      <div class="col-2">
+                                              <img id="header_submenu" src="/img/urunler/" alt="Elbistan Damla Sakızlı"/>
+                        <a class="btn btn-black" href="/kervansaray-elbistan-damla-sakizli-kahveler"><span>15.99 TL</span>Satın Al</a>
+                                            </div>
+                    </li>
+                                        <li><a href="/cold-drip" ng-mouseover="kategori1 = 16">Cold Drip</a></li>
+                    <li class="offer" ng-show="kategori1 == 16" >
+                      <div class="col-1">
+                        <p class="p-style2">Yaşayacağınız en iyi, taze ve gerçek soğuk kahve deneyimi yanında, hazırlaması ve sunumu en pratik ve kısa süren bir ürün</p>
+                      </div>
+                      <div class="col-2">
+                                              <img id="header_submenu" src="/img/urunler/144_1442378842_ocd.jpg" alt="Cold Drip"/>
+                        <a class="btn btn-black" href="/coffee-nutz-cold-drip-kahveler"><span>10.99 TL</span>Satın Al</a>
+                                            </div>
+                    </li>
+                                                </ul>
+            </li>
+             
+                                  <li style="position: static;" class="has-submenu">
+              <a href="/kahve-demleme-ekipmanlari">Kahve Demleme Ekipmanları</a>
+              <ul style="left: 0;" class="submenu">
+                                <span ng-init="kategori2 = 51"></span>
+                                        <li><a href="/chemex-kahve-demleme-ekipmanlari" ng-mouseover="kategori2 = 51">Chemex</a></li>
+                    <li class="offer" ng-show="kategori2 == 51" >
+                      <div class="col-1">
+                        <p class="p-style2">Saf ve aromatik kahve demlemenin en tarz ekipmanı</p>
+                      </div>
+                                              <div class="col-2">
+                          <img id="header_submenu" src="/img/urunler/47_1439898391_u6Z.jpg" alt="Ahşap Tutacaklı 6 Kişilik"/>
+                          <a class="btn btn-black" href="/chemex-ahsap-tutacakli-6-cup-kahve-demleme-ekipmanlari"><span>139.99 TL</span>Satın Al</a>
+                        </div>
+                                          </li>
+                                        <li><a href="/hario-kahve-demleme-ekipmanlari" ng-mouseover="kategori2 = 52">Hario</a></li>
+                    <li class="offer" ng-show="kategori2 == 52" >
+                      <div class="col-1">
+                        <p class="p-style2">Kahve demlemenin en pratik hali</p>
+                      </div>
+                                              <div class="col-2">
+                          <img id="header_submenu" src="/img/urunler/93_1440931494_mzd.jpg" alt="Hario V60 Dripper Kırmızı"/>
+                          <a class="btn btn-black" href="/hario-v60-02-dripper-kirmizi-seramik-kahve-demleme-ekipmanlari"><span>99.99 TL</span>Satın Al</a>
+                        </div>
+                                          </li>
+                                                                  <span ng-init="kategori2 = 7"></span>
+                                        <li><a href="/moka-pot" ng-mouseover="kategori2 = 7">Moka Pot</a></li>
+                    <li class="offer" ng-show="kategori2 == 7" >
+                      <div class="col-1">
+                        <p class="p-style2">Hem pratik hem de aşırı lezzetli bir kahveye ne dersiniz?</p>
+                      </div>
+                      <div class="col-2">
+                                              <img id="header_submenu" src="/img/urunler/87_1440795821_wUp.jpg" alt="Moka Pot Express 2 Kişilik"/>
+                        <a class="btn btn-black" href="/bialetti-moka-pot-express-2-cup-kahveler"><span>69.99 TL</span>Satın Al</a>
+                                            </div>
+                    </li>
+                                        <li><a href="/french-press" ng-mouseover="kategori2 = 10">French Press</a></li>
+                    <li class="offer" ng-show="kategori2 == 10" >
+                      <div class="col-1">
+                        <p class="p-style2">Kahve yapmanın en kolay yolu</p>
+                      </div>
+                      <div class="col-2">
+                                              <img id="header_submenu" src="/img/urunler/19_1440854263_Dbe.jpg" alt="Kenya French Press 4 Kişilik"/>
+                        <a class="btn btn-black" href="/bodum-kenya-french-press-4-cup-kahve-demleme-ekipmanlari"><span>41.99 TL</span>Satın Al</a>
+                                            </div>
+                    </li>
+                                        <li><a href="/diger-demleme-ekipmanlari" ng-mouseover="kategori2 = 11">Aeropress</a></li>
+                    <li class="offer" ng-show="kategori2 == 11" >
+                      <div class="col-1">
+                        <p class="p-style2">Espressonuzu her yerde her zaman aynı lezzetle içebilmeniz için tasarlanan 3. nesil kahve demleme ekipmanı Aeropress</p>
+                      </div>
+                      <div class="col-2">
+                                              <img id="header_submenu" src="/img/urunler/49_1441133843_zsB.jpg" alt="Aeropress"/>
+                        <a class="btn btn-black" href="/aeropress-kahve-demleme-ekipmanlari"><span>129.99 TL</span>Satın Al</a>
+                                            </div>
+                    </li>
+                                                </ul>
+            </li>
+             
+                       
+            <li style="position: static;">
+              <a href="/kahve-degirmenleri">Kahve Değirmenleri</a>
+            </li>
+             
+                       
+            <li style="position: static;">
+              <a href="/kahve-makineleri">Kahve Makineleri</a>
+            </li>
+             
+                       
+            <li style="position: static;">
+              <a href="/filtreler">Filtreler</a>
+            </li>
+             
+           
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+
+  <div class="toolbar-container">
+    <div class="container">  
+      <!--Toolbar-->
+      <div class="toolbar group">
+                  <a class="login-btn btn-outlined-invert" href="#" data-toggle="modal" data-target="#loginModal"><i class="icon-profile"></i> <span><b>G</b>İRİŞ Yap</span></a>
+        
+        <div class="cart-btn">
+  <a class="btn btn-outlined-invert" href="/sepet"><i class="icon-shopping-cart-content"></i><span>{{sepet_urunler.length}}</span><b>{{getToplam() | number:2}}</b></a>
+  
+  <!--Cart Dropdown-->
+  <div class="cart-dropdown">
+    <span></span><!--Small rectangle to overlap Cart button-->
+    <div class="body">
+      <table>
+        <tr>
+          <th>Ürün</th>
+          <th>Adet</th>
+          <th>Fiyat</th>
+        </tr>
+        <tr class="item" ng-repeat="sepet_urun in sepet_urunler">
+          <td><div ng-click="urunCikar(sepet_urun.id, $index)" class="delete"></div><a href="/{{kategoriler[sepet_urun.id]}}/{{urunler[sepet_urun.urun_id].urun_ismi_ID}}">{{urunler[sepet_urun.urun_id].urun_ismi}}</a></td>
+          <td><input type="text" ng-change="updateMiktar(sepet_urun.id, count, $index)" ng-model="count" ng-init="count = sepet_urun.miktar"></td>
+          <td class="price">{{sepet_urun.fiyat | number:2}} TL</td>
+        </tr>
+        <tr class="item" ng-hide="indirim == 0">
+          <td class="text-right">indirim</td>
+          <td></td>
+          <td class="price">-{{indirim | number:2}} TL</td>
+        </tr>
+         <tr class="item">
+          <td class="text-right">kargo</td>
+          <td></td>
+          <td class="price">{{getKargo() | number:2}} TL</td>
+        </tr>
+      </table>
+    </div>
+    <div class="footer group">
+      <div class="buttons">
+        <a class="btn btn-outlined-invert" href="/odeme"><i class="icon-download"></i>Sipariş Ver</a>
+        <a class="btn btn-outlined-invert" href="/sepet"><i class="icon-shopping-cart-content"></i>Sepet</a>
+      </div>
+      <div class="total">{{getToplam() | number:2}} TL</div>
+    </div>
+  </div><!--Cart Dropdown Close-->
+</div>
+      </div><!--Toolbar Close-->
+    </div>
+  </div>
+</header><!--Header Close-->
+
+        
+
+        
+        
+
+
+        
+        <div class="page-content">
+        	
+<div class="container">
+  <h1>Kahveler - Filtre Kahve</h1>
+  <div>Filtre kullanarak birçok 3. nesil demleme ekipmanı ile hazırlayabileceğiniz muhteşem kahveler burada</div>
+</div>
+<!--Breadcrumbs-->
+<ol class="breadcrumb">
+  <li><a href="/">KahhveCom</a></li>
+      <li><a href="/kahveler">Kahveler</a></li>
+    <li>Filtre Kahve</li>
+</ol><!--Breadcrumbs Close-->
+
+<div ng-controller="katalogctrl">
+  <!--Ürün bilgileri-->
+  <span class="hidden" id="isim_id">filtre-kahve</span>
+  <span class="hidden" id="kategori_type">kategori_onerilenler</span>
+  <!--Ürün bilgileri Son-->
+
+  <!--Catalog Grid-->
+  <section class="catalog-grid">
+  	<div class="container">
+      <h2 class="with-sorting col-lg-3 col-md-3 col-sm-4">Filtreler</h2>
+      <div class="sorting">
+        <a class="cursor_pointer" ng-click="fiyatsirala(fiyatsiralama); fiyatsiralama = !fiyatsiralama" ng-init="fiyatsiralama = true">Fiyata Göre Sırala</a>
+      </div>
+      <div class="row">
+      
+        <!--Filters-->
+      	<div class="filters-mobile col-lg-3 col-md-3 col-sm-4">
+        	<div class="shop-filters">
+            <!--Marka Section-->
+            <section class="filter-section" ng-show = "marka_count > 1">
+            	<h3>Markaya göre</h3>
+              <span class="clear clearChecks" ng-click="filtre_temizle('marka')">Temizle</span>
+              <span ng-repeat="marka in filtre.marka">
+                <label>
+                  <input type="checkbox" ng-click="check('marka')" ng-model="marka.ischecked" data-ng-true-value="1">
+                  {{marka.isim}} ({{marka.count}})</label>
+                <br>
+              </span>
+            </section>
+
+            <!--Kategori Section-->
+            <section class="filter-section" ng-show = "kategori_count > 1">
+              <h3>Kategoriye göre</h3>
+              <span class="clear clearChecks" ng-click="kategori_filtre_temizle()">Temizle</span>
+              <span ng-repeat="kategori in filtre.kategori">
+                <label>
+                  <input type="checkbox" ng-click="check('kategori')" ng-model="kategori.ischecked" data-ng-true-value="1">
+                  {{kategori.isim}} ({{kategori.count}})</label>
+                <br>
+              </span>
+            </section>
+
+            <!--Kargolanma Section-->
+            <section class="filter-section" ng-show = "kargolanma_count > 1">
+              <h3>Kargolanma Süresi</h3>
+              <span class="clear clearChecks" ng-click="kargolanma_filtre_temizle()">Temizle</span>
+              <span ng-repeat="kargolanma in filtre.kargolanma">
+                <label>
+                  <input type="checkbox" ng-click="check('kargolanma')" ng-model="kargolanma.ischecked" data-ng-true-value="1">
+                  {{kargolanma.isim}} ({{kargolanma.count}})</label>
+                <br>
+              </span>
+            </section>
+            
+          </div>
+        </div>
+        
+        <!--Tiles-->
+      	<div class="col-lg-9 col-md-9 col-sm-8">
+        	<div class="row">
+            <!--Tile-->
+            <div class="col-lg-4 col-md-6 col-sm-12" ng-repeat="urun in katalog_urunler | filter:filtreleme">
+              <div class="tile">
+                <div class="price-label">{{urun.fiyat}} TL</div>
+                <a href="{{urun.link}}" id="img">
+                  <img id="img{{urun.id}}" ng-src="/img/urunler/{{urun.ana_resim}}" alt="{{urun.urum_ismi}}"/>
+                  <span class="tile-overlay"></span>
+                </a>
+                <div class="footer">
+                  <a href="{{urun.link}}" style="font-size: 1em;">{{urun.urun_ismi}}</a>
+                  <a href="{{urun.marka_link}}"><span>{{urun.marka_ismi}}</span></a>
+                  <button class="btn btn-primary" onclick="movecart(urun.id)" ng-click="urunekle(urun.id)">Sepete Ekle</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row cursor_pointer text-center" id="see_all" ng-hide="butun_urunleri_goster" ng-click="butun_urunleri_goster = 1"><a><< hepsini gör >><a></div>
+        </div>
+      </div>
+    </div>
+  </section><!--Catalog Grid Close-->
+</div>
+
+        </div>
+        
+
+		
+        	<!--Sticky Buttons-->
+<div class="sticky-btns" ng-controller="iletisim_formu_ctrl">
+	<form class="quick-contact ajax-form" method="post" name="iletisim-formu" id="iletisim-formu">
+  	<h3>İletişim Formu</h3>
+    <p ng-show="iletisim_formu_gonderildi" class="text-muted">Mesajınız alındı. En kısa zamanda dönüş yapacağımızdan emin olabilirsiniz.</p>
+    <div ng-hide="iletisim_formu_gonderildi">
+      <div class="form-group">
+      	<label for="qc-name">Ad Soyad</label>
+        <input class="form-control input-sm" type="text" name="adsoyad" ng-model="iletisim.adsoyad" id="qc-name" placeholder="Adınız soyadınız" required>
+      </div>
+      <div class="form-group">
+      	<label for="qc-email">Mail Adresi</label>
+        <input class="form-control input-sm" type="email" name="mail" ng-model="iletisim.mail" id="qc-email" placeholder="Mail adresini giriniz" required>
+      </div>
+      <div class="form-group">
+      	<label for="qc-message">Mesajınız</label>
+        <textarea class="form-control input-sm" ng-model="iletisim.mesaj" name="mesaj" id="qc-message" placeholder="Mesajınızı giriniz." required></textarea>
+      </div>
+      <!-- Validation Response -->
+      <div class="response-holder"></div>
+      <!-- Response End -->
+      <input class="btn btn-black btn-sm btn-block" ng-click="gonder()" value="Gönder">
+    </div>
+  </form>
+	<span id="qcf-btn"><i class="fa fa-envelope"></i></span>
+  <span id="scrollTop-btn"><i class="fa fa-chevron-up"></i></span>
+</div><!--Sticky Buttons Close-->
+        
+
+        
+        	<!--Subscription Widget-->
+<section class="subscr-widget gray-bg">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-7 col-md-8 col-sm-8">
+        <h2>KahhveCom bültenine üye ol</h2>
+        <form class="subscr-form" role="form" autocomplete="off">
+          <div class="form-group">
+            <label class="sr-only" for="subscr-name">Mail Adresi</label>
+            <input type="email" class="form-control" name="subscr-name" id="subscr-name" placeholder="Mail Adresi" ng-model="mailingmail" required>
+            <button ng-click="subscribe()" class="subscr-next"><i class="icon-arrow-right"></i></button>
+          </div>
+          <div class="form-group fff" style="display: none">
+            Hosgeldiniz
+          </div>
+        </form>
+        <p class="p-style2">Lütfen mail adresinizi giriniz.</p>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-1">
+        <p class="p-style3">Her geçen gün bir başka markanın, bir başka yörenin kahvesini veya yepyeni bir kahve demleme ekipmanını ürün ailemize ekliyoruz. Sizin de bu yeniliklerden haberdar olacağınızı düşündük ve yenilikleri duyurduğumuz bir bülten oluşturduk. Hemen mail adresini ver sen de bu ailenin üyesi ol.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Subscription Widget Close-->        
+
+        <!--Login Modal-->
+<div class="modal fade" id="siparistakip" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+        <h2>Şipariş Takip</h2>
+      </div>
+      <div class="modal-body">
+        <form class="login-form" action="/takip" id="siparistakip_form" method="post">
+          <div class="alert alert-danger" role="alert" ng-show="takip_error" ng-init="takip_error = 0">
+            <span class="fa fa-exclamation" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            Böyle bir sipariş bulunmamaktadır.
+          </div>
+          <div class="form-group group">
+            <label for="unuttum-email">Sipariş Numaranız</label>
+            <input type="text" class="form-control" name="takip_no" ng-model="takip_no" id="unuttum-mail" placeholder="Sipariş Takip Numaranız" required>
+          </div>
+          <input class="btn btn-black" ng-click="siparistakip()" value="Bul">
+        </form>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->        <!--Login Modal-->
+<div class="modal fade" id="sil_modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+        <h2>Silme Onayı</a></h2>
+      </div>
+      <div class="modal-body">
+          <div class="alert alert-danger" role="alert" ng-show="unuttum_error">
+            <span class="fa fa-exclamation" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            Bu mail adresiyle kayıtlı bir üye yok. Hemen <a href="/login/login"> üye ol</a>
+          </div>
+          <div>
+            {{sil_isim}} silmek istediğinizden emin misiniz?
+          </div>
+          <div class="row">
+            <input class="btn btn-primary col-md-4 pull-right" data-dismiss="modal" ng-click="silmeonay(dataid, sil_path, sil_id)" value="Sil">
+            <input class="btn btn-primary col-md-4 pull-right" data-dismiss="modal" value="Vazgeç">
+          </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->        
+        	<!--Footer-->
+  <footer class="footer">
+  	<div class="container">
+    	<div class="row">
+      	<div class="col-lg-5 col-md-5 col-sm-5">
+        	<div class="info">
+            <a class="logo" href="index.html"><img src="/img/layout/kahhve_logo_beyaz.png" alt="KahhveCom"/></a>
+            <p>Taze kahve ve kaliteli ekipman konusunda zengin ürün çeşitliliği ve müşteri memnuniyeti odaklılığı ile yeni kahve dükkanınız.</p>
+            <div class="social">
+            	<a href="http://instagram.com/kahhvecom" target="_blank"><i class="fa fa-instagram"></i></a>
+            	<a href="https://www.youtube.com/kahhve" target="_blank"><i class="fa fa-youtube-square"></i></a>
+            	<a href="https://twitter.com/kahhvecom" target="_blank"><i class="fa fa-twitter-square"></i></a>
+            	<a href="http://www.pinterest.com/kahhve" target="_blank"><i class="fa fa-pinterest-square"></i></a>
+            	<a href="https://www.facebook.com/kahhvecom" target="_blank"><i class="fa fa-facebook-square"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+        	<h2>Yardım</h2>
+          <ul class="list-unstyled">
+            <li><a href="/bizkimiz">Biz Kimiz</a></li>
+            <li><a href="/yardim/sss">Sık Sorulan Sorular</a></li>
+            <li><a href="/iletisim">Bize Ulaşın</a></li>
+            <li><a class="cursor_pointer" data-toggle="modal" data-target="#siparistakip">Sipariş Takip</a></li>
+          </ul>
+        </div>
+        <div class="contacts col-lg-3 col-md-3 col-sm-3">
+        	<h2>İletişim</h2>
+          <p class="p-style3">
+          	Seyhan Sok. Özgüven Sitesi A Blok<br/>
+            İçerenköy / Ataşehir / İstanbul<br/>
+            <a href="mailto:mail@Limo.com">info@kahhve.com</a><br/>
+            0 850 209 68 87<br/>
+          </p>
+        </div>
+      </div>
+      <div class="copyright">
+      	<div class="row">
+        	<div class="col-lg-7 col-md-7 col-sm-7">
+            <p>&copy; 2014 KahhveCom</a></p>
+          </div>
+        	<div class="col-lg-5 col-md-5 col-sm-5">
+          	<div class="payment">
+              <img src="/img/layout/visa.png" alt="Visa"/>
+              <img src="/img/layout/paypal.png" alt="PayPal"/>
+              <img src="/img/layout/master.png" alt="Master Card"/>
+              <img src="/img/layout/discover.png" alt="Discover"/>
+              <img src="/img/layout/amazon.png" alt="Amazon"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer><!--Footer Close-->        
+
+        
+        
+
+        
+
+    </body>
+
+    <!--Javascript (jQuery) Libraries and Plugins-->
+    <script type="text/javascript" src="/js/libs/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/js/libs/jquery.easing.min.js"></script>
+    <script type="text/javascript" src="/js/plugins/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/plugins/icheck.min.js"></script>
+    <script type="text/javascript" src="/js/plugins/smoothscroll.js"></script>
+    <script type="text/javascript" src="/js/plugins/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="/js/plugins/lightGallery.min.js"></script>
+    <script type="text/javascript" src="/js/plugins/jquery.placeholder.js"></script>
+    <script type="text/javascript" src="/js/plugins/jquery.stellar.min.js"></script>
+    <script type="text/javascript" src="/js/plugins/jquery.touchSwipe.min.js"></script>
+    <script type="text/javascript" src="/js/plugins/jquery.shuffle.min.js"></script>
+    <script type="text/javascript" src="/js/plugins/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="/js/plugins/masterslider.min.js"></script>
+    <script type="text/javascript" src="/js/plugins/jquery.nouislider.min.js"></script>
+
+    <script type="text/javascript" src="/js/scripts.js"></script>
+    <script type="text/javascript" src="/mailer/mailer.js"></script>
+
+    <script type="text/javascript" src="/js/kahhve.js"></script>
+
+    
+  <script type="text/javascript" src="/js/katalog.js"></script>
+
+</html>
