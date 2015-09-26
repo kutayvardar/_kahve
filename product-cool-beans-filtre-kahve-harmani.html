@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr" itemscope="itemscope" itemtype="http://schema.org/Product">
     <head>
         
           <meta>
@@ -17,21 +17,19 @@
 
         </title>
         
-        <meta name="robots" content="noindex" />
+       <!-- <meta name="robots" content="noindex" /> -->
         
   <meta name="description" content="">
-  <meta name="keywords" content="">
+  <!-- <meta name="keywords" content=""> -->
 
 
         
     <meta property="og:title" content="Cool Beans - Filtre Kahve Harmanı | KahhveCom" />
-
-
-        
+     
     <meta property="og:description" content="" />
 
 
-        
+    <meta itemprop="image" content="http://denebakalim.com/img/urunler/65_1440235083_KyQ.jpg"/>    
     <meta property="og:image" content="http://denebakalim.com/img/urunler/65_1440235083_KyQ.jpg"/>
     <meta property="og:image:width" content="300" />
     <meta property="og:image:height" content="300" />
@@ -390,10 +388,10 @@
         <div class="page-content">
         	
 <!--Breadcrumbs-->
-<ol class="breadcrumb">
-  <li><a href="/">KahhveCom</a></li>
-  <li><a href="/kahveler">Kahveler</a></li>
-      <li><a href="/filtre-kahve">Filtre Kahve</a></li>
+<ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+  <li><a href="/">Ana Sayfa</a></li>
+  <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a itemprop="item" href="/kahveler"><span itemprop="name">Kahveler</span></a><meta itemprop="position" content="1" /></li>
+      <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a itemprop="item" href="/filtre-kahve"><span itemprop="name">Filtre Kahve</a></span><meta itemprop="position" content="2" /></li>
     <li>Filtre Kahve Harmanı</li>
 </ol><!--Breadcrumbs Close-->
 
@@ -411,25 +409,33 @@
     <div class="row">
     
     	<!--Product Gallery-->
-      <div class="col-lg-6 col-md-6">
+      <div class="col-lg-6 col-md-6" itemscope="itemscope" itemtype="http://schema.org/ImageObject">
       	<div class="prod-gal master-slider" id="prod-gal">
         	<!--Slide1-->
                       <div class="ms-slide">
-              <img data-src="/img/urunler/65_1440235083_KyQ.jpg" alt="Filtre Kahve Harmanı"/>
-              <img class="ms-thumb" src="/img/urunler/65_1440235083_KyQ.jpg" alt="Filtre Kahve Harmanı" />
+              <img data-src="/img/urunler/65_1440235083_KyQ.jpg" alt="Filtre Kahve Harmanı" />
+              <img class="ms-thumb" src="/img/urunler/65_1440235083_KyQ.jpg" alt="Filtre Kahve Harmanı"/>
+              <meta content="/img/urunler/65_1440235083_KyQ.jpg" itemprop="image">
+              <meta content="/img/urunler/65_1440235083_KyQ.jpg" itemprop="thumbnailUrl">
+              <meta content="Filtre Kahve Harmanı" itemprop="caption">
+</div>
             </div>
                       <div class="ms-slide">
-              <img data-src="/img/urunler/65_1440235122_IkK.JPG" alt="Filtre Kahve Harmanı"/>
+              <img data-src="/img/urunler/65_1440235122_IkK.JPG" alt="Filtre Kahve Harmanı" />
               <img class="ms-thumb" src="/img/urunler/65_1440235122_IkK.JPG" alt="Filtre Kahve Harmanı" />
+              <meta content="/img/urunler/65_1440235122_IkK.JPG" itemprop="image">
+              <meta content="/img/urunler/65_1440235122_IkK.JPG" itemprop="thumbnailUrl">
+              <meta content="Filtre Kahve Harmanı" itemprop="caption">
             </div>
                   </div>
       </div>
       
       <!--Product Description-->
       <div class="col-lg-6 col-md-6">
-        <h1>Cool Beans Filtre Kahve Harmanı</h1>
+        <h1 itemprop="name">Cool Beans Filtre Kahve Harmanı</h1>
+        <p itemprop="brand">Cool Beans</p> <!-- to be added -->
         <div class="old-price"></div>
-        <div class="price">21.99 TL</div>
+        <div class="price" itemtype="http://schema.org/Offer" itemscope="itemscope" itemprop="offers"><span itemprop="price">21.99 <span itemprop="priceCurrency" content="TRY">TL</span></span></div>
         <div class="buttons group">
           <div class="qnt-count">
             <a class="incr-btn" href="#">-</a>
@@ -452,7 +458,7 @@
 	<option value="16">Espresso</option>
 </select>              </div>
           </div>
-                <p class="p-style2">İster kahvaltınızın yanında isterseniz akşam saatlerinde içilebilecek bir lezzet sunan asiditesi düşük, güçlü bir gövde ve aromaya sahip orta koyulukta kavrulmuş kahve çekirdeklerinden oluşur. Genel damak tadına en uygun sertlikte bir harmandır. </p>
+                <p class="p-style2" itemprop="description">İster kahvaltınızın yanında isterseniz akşam saatlerinde içilebilecek bir lezzet sunan asiditesi düşük, güçlü bir gövde ve aromaya sahip orta koyulukta kavrulmuş kahve çekirdeklerinden oluşur. Genel damak tadına en uygun sertlikte bir harmandır. </p>
         <div class="row">
           <div class="col-lg-4 col-md-4 col-sm-5">
             <h3>Paylaş</h3>
@@ -495,7 +501,7 @@
                     <div class="item">
                       <div class="row">
                         <div class="col-lg-4 col-md-4 col-sm-3"><i class="ea_icon weight"></i><span>Ağırlık</span></div>
-                        <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2">250 gr</p></div>
+                        <div class="col-lg-8 col-md-8 col-sm-9"><p class="p-style2" itemprop="weight">250 gr</p></div>
                       </div>
                     </div>
                   </div>
@@ -532,26 +538,28 @@
         	<!--Disqus Comments Plugin-->
         	<div class="col-lg-10 col-lg-offset-1">
              <div ng-controller="yorumctrl">
-				<blockquote>
+				<blockquote itemprop="review" itemscope="" itemtype="http://schema.org/Review">
 
-			<h3>Gerçekten iyi.. </h3> 
-			<p>Starbucks müdavimi biri olarak denemek için aldım..gerçekten bu üçüncü nesil kahve dedikleri kadar fark ediyormuş..
+			<h3 itemprop="name">Gerçekten iyi.. </h3> 
+			<p itemprop="reviewBody">Starbucks müdavimi biri olarak denemek için aldım..gerçekten bu üçüncü nesil kahve dedikleri kadar fark ediyormuş..
 
 Bir kere ben bile aradaki tazelik farkını anlayabildim..kokuya hiç girmeyeceğim bile, bütün ofis muhteşem kahve kokusuyla doldu..
 
 Tek kötü yanı kokuyu duyan geldi, aldığımın ikinci günündeyim yarısı bitti :(</p>
 			<footer>
-					Hakan Delibalta 
+					<span itemprop="author">Hakan Delibalta</span> 
 												</footer>
+    <meta itemprop="datePublished" content="2015-09-17">                    
 		</blockquote>
-			<blockquote>
+			<blockquote itemprop="review" itemscope="" itemtype="http://schema.org/Review">
 
-			<h3>Klasik Severlere </h3> 
-			<p>Doğrusu paketi benim burnuma biraz ekşi kokuyor, tadından pek hoşlanmadım. Yine de biraz daha fazla kahve ölçüsü ile deneyeceğim ama.
+			<h3 itemprop="name">Klasik Severlere </h3> 
+			<p itemprop="reviewBody">Doğrusu paketi benim burnuma biraz ekşi kokuyor, tadından pek hoşlanmadım. Yine de biraz daha fazla kahve ölçüsü ile deneyeceğim ama.
 
 Not: Kâğıt filtre kullanıyorum.</p>
 			<footer>
-					Pınar Elif Karabal 
+					<span itemprop="author">Pınar Elif Karabal</span>
+          <meta itemprop="datePublished" content="2015-09-15"> 
 																</footer>
 		</blockquote>
 	
